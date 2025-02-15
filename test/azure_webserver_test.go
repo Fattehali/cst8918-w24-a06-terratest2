@@ -30,7 +30,12 @@ func TestAzureLinuxVMCreation(t *testing.T) {
 	// Run `terraform output` to get the value of output variable
 	vmName := terraform.Output(t, terraformOptions, "vm_name")
 	resourceGroupName := terraform.Output(t, terraformOptions, "resource_group_name")
+	nicName := terraform.Output(t, terraformOptions, "nic_name")
 
 	// Confirm VM exists
 	assert.True(t, azure.VirtualMachineExists(t, vmName, resourceGroupName, subscriptionID))
+	assert.True(t, azure.NetworkInterfaceExists(t, nicName, resourceGroupName, subscriptionID))
+	nic := azure.GetNetworkInterface(t, nicName, resourceGroupName, subscriptionID)
+	assert.Equal(t, vmName, *nic.VirtualMachine.ID)
+
 }
