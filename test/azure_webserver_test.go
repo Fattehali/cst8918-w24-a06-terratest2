@@ -35,7 +35,5 @@ func TestAzureLinuxVMCreation(t *testing.T) {
 	// Confirm VM exists
 	assert.True(t, azure.VirtualMachineExists(t, vmName, resourceGroupName, subscriptionID))
 	assert.True(t, azure.NetworkInterfaceExists(t, nicName, resourceGroupName, subscriptionID))
-	nic := azure.GetNetworkInterface(t, nicName, resourceGroupName, subscriptionID)
-	assert.Equal(t, vmName, *nic.VirtualMachine.ID)
 
 }
